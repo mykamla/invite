@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "342430231109",
+    "project_id": "event-be232",
+    "storage_bucket": "event-be232.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:342430231109:android:0c08b8590a34607f2e512c",
+        "android_client_info": {
+          "package_name": "com.myliveevent.myliveevent"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "342430231109-3t3v12ugleuuq05lt3rk988e4jhgrq34.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbA2JfMOX4ZgE99en7NPEP0Iw_XZeBCxI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "342430231109-3t3v12ugleuuq05lt3rk988e4jhgrq34.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "342430231109-fpvafuq1edvjji2fusdc221cpocbamgi.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.myliveevent.myliveevent"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
