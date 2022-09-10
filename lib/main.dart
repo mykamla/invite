@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:myliveevent/provider/eventState.dart';
+import 'package:myliveevent/theme/myTheme.dart';
 import 'package:myliveevent/ui/event/live/broacast.dart';
 import 'package:myliveevent/ui/event/live/live.dart';
 import 'package:myliveevent/ui/menu/my_bubble_bottom_bar.dart';
@@ -44,7 +45,8 @@ class MyApp extends StatelessWidget {
         child: MaterialApp(
           title: 'APP Dec',
           theme: ThemeData(
-            primarySwatch: Colors.blue,
+            primaryColor: PrimaryColor,
+            primarySwatch: PrimarySwatch,
             visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
           initialRoute: '/',

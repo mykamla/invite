@@ -112,7 +112,7 @@ class _LiveState extends State<Live> {
             fit: BoxFit.cover,
           ),
           Container(
-            child: ChatPage(email: "email@eamil.com", codeEvent: 'event code',),
+            child: ChatPage(email: "email@email.com", codeEvent: 'event code',),
           )
         ],
       )

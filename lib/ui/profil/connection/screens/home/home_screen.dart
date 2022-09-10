@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myliveevent/ui/profil/connection/common/loading.dart';
+import 'package:myliveevent/widget/loading.dart';
 import 'package:myliveevent/ui/profil/connection/models/user.dart';
 import 'package:myliveevent/ui/profil/connection/screens/home/user_list.dart';
 import 'package:myliveevent/ui/profil/connection/services/authentication.dart';

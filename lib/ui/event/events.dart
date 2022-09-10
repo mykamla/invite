@@ -1,6 +1,7 @@
 import 'package:chat_bubbles/bubbles/bubble_normal.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:myliveevent/model/event.dart';
 
 class Events extends StatefulWidget {
 
