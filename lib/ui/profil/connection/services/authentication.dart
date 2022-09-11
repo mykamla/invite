@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:myliveevent/ui/profil/connection/models/user.dart';
+import 'package:myliveevent/model/app_user.dart';
 import 'package:myliveevent/ui/profil/connection/services/database.dart';
 
 class AuthenticationService {
@@ -33,7 +33,7 @@ class AuthenticationService {
       if (user == null) {
         throw Exception("No user found");
       } else {
-        await DatabaseService(user.uid).saveUser(name, 0);
+        await DatabaseService(user.uid).saveUser(name);
 
         return _userFromFirebaseUser(user);
       }

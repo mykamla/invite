@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myliveevent/model/user.dart';
 import 'package:myliveevent/widget/loading.dart';
 import 'package:myliveevent/ui/profil/connection/models/user.dart';
 import 'package:myliveevent/ui/profil/connection/screens/home/user_list.dart';
@@ -14,7 +15,7 @@ class HomeScreen extends StatelessWidget {
     final user = Provider.of<AppUser?>(context);
     if (user == null) throw Exception("user not found");
     final database = DatabaseService(user.uid);
-    return StreamProvider<List<AppUserData>>.value(
+    return StreamProvider<List<User>>.value(
       initialData: [],
       value: database.users,
       child: Scaffold(
@@ -24,11 +25,11 @@ class HomeScreen extends StatelessWidget {
           elevation: 0.0,
           title: Text('Water Social'),
           actions: <Widget>[
-            StreamBuilder<AppUserData>(
+            StreamBuilder<User>(
               stream: database.user,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  AppUserData? userData = snapshot.data;
+                  User? userData = snapshot.data;
                   if (userData == null) return Loading();
                   return TextButton.icon(
                     icon: Icon(
@@ -37,7 +38,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                     label: Text('drink', style: TextStyle(color: Colors.white)),
                     onPressed: () async {
-                      await database.saveUser(userData.name, userData.waterCounter + 1);
+                      await database.saveUser(userData.nom!);
                     },
                   );
                 } else {

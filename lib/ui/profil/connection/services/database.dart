@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:myliveevent/ui/profil/connection/models/user.dart';
+import 'package:myliveevent/model/user.dart';
 
 class DatabaseService {
   final String uid;
@@ -9,31 +9,34 @@ class DatabaseService {
   final CollectionReference<Map<String, dynamic>> userCollection =
       FirebaseFirestore.instance.collection("users");
 
-  Future<void> saveUser(String name, int waterCounter) async {
-    return await userCollection.doc(uid).set({'name': name, 'waterCount': waterCounter});
+  Future<void> saveUser(String name) async {
+    return await userCollection.doc(uid).set({'name': name});
+  }
+  Future<void> saveUserPhoto(String name) async {
+    return await userCollection.doc(uid).set({'photo': name});
   }
 
-  AppUserData _userFromSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot) {
+  User _userFromSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot) {
     var data = snapshot.data();
     if (data == null) throw Exception("user not found");
-    return AppUserData(
+    return User(
       uid: uid,
-      name: data['name'],
-      waterCounter: data['waterCount'],
+      nom: data['name'],
+      photo: data['photo']
     );
   }
 
-  Stream<AppUserData> get user {
+  Stream<User> get user {
     return userCollection.doc(uid).snapshots().map(_userFromSnapshot);
   }
 
-  List<AppUserData> _userListFromSnapshot(QuerySnapshot<Map<String, dynamic>> snapshot) {
+  List<User> _userListFromSnapshot(QuerySnapshot<Map<String, dynamic>> snapshot) {
     return snapshot.docs.map((doc) {
       return _userFromSnapshot(doc);
     }).toList();
   }
 
-  Stream<List<AppUserData>> get users {
+  Stream<List<User>> get users {
     return userCollection.snapshots().map(_userListFromSnapshot);
   }
 }

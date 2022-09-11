@@ -15,7 +15,7 @@ import '../../chat/chatpage.dart';
 class Live extends StatefulWidget {
   Live({required this.channelName, this.uid});
   String? channelName;
-  final int? uid;
+  final int? uid; // it isn't uid from Firebase auth
 
   @override
   _LiveState createState() => _LiveState();

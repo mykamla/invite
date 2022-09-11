@@ -178,6 +178,7 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
                                           : await _auth.registerWithEmailAndPassword(name, email, password);
                                     if (result == null) {
                                       setState(() {
+                                        print("eeeeeeeeeeeeeeX");
                                         loading = false;
                                         error = 'Impossible de se connecter';
                                       });

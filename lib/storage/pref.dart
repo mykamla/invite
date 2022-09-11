@@ -3,6 +3,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class MyPrefferences{
 
+  Future<void> setUid(int uid) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setInt('uid', uid);
+  }
+
+  Future<int> getUid() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int? uid = prefs.getInt('uid');
+    return uid??0;
+  }
+
   Future<void> setUser(Map<String, dynamic> user) async {
     print('ok list megX');
     print(user);

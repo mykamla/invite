@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:myliveevent/model/event.dart';
 
 class Events extends StatefulWidget {
+  Events({required this.uid, Key? key}) : super(key: key);
+  String? uid;
 
   @override
   _EventsState createState() => _EventsState();
@@ -21,13 +23,13 @@ class _EventsState extends State<Events> {
             initialItemCount: 10,
             itemBuilder: (BuildContext context, int index, Animation<double> animation) {
               return ListTile(
-                title: Text('Title'),
+                title: Text(widget.uid!),
                 subtitle: Text('Description event'),
                 leading: IconButton(
                     color: Colors.redAccent,
                     iconSize: 20,
                     onPressed: (){
-                      Navigator.pushNamed(context, '/live', arguments: 'arg');
+                      Navigator.pushNamed(context, '/live', arguments: {"uid": widget.uid!});
                     },
                     icon: Icon(Icons.live_tv_outlined)),
                 trailing: SizedBox(
