@@ -1,8 +1,8 @@
-import 'package:agora_uikit/agora_uikit.dart';
+//import 'package:agora_uikit/agora_uikit.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import 'package:agora_rtc_engine/media_recorder.dart';
+//import 'package:agora_rtc_engine/media_recorder.dart';
 import 'package:agora_rtc_engine/rtc_channel.dart';
 import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:agora_rtc_engine/rtc_local_view.dart';
@@ -26,13 +26,13 @@ class _BroadcastState extends State<Broadcast> {
   }
 
 
-  AgoraClient agoraClient = AgoraClient(agoraConnectionData: AgoraConnectionData(appId: appId, channelName: channelName), enabledPermission: [Permission.camera, Permission.microphone]);
+ // AgoraClient agoraClient = AgoraClient(agoraConnectionData: AgoraConnectionData(appId: appId, channelName: channelName), enabledPermission: [Permission.camera, Permission.microphone]);
 
 
   @override
   void dispose() {
     super.dispose();
-    agoraClient.initialize();
+  //  agoraClient.initialize();
   }
 
   @override
@@ -40,10 +40,8 @@ class _BroadcastState extends State<Broadcast> {
     return Scaffold(
       body: Stack(
         children: [
-          AgoraVideoViewer(client: agoraClient),
-          AgoraVideoButtons(client: agoraClient,
-            autoHideButtons: false,
-          )
+       //   AgoraVideoViewer(client: agoraClient),
+       //   AgoraVideoButtons(client: agoraClient, autoHideButtons: false,)
         ],
       )
     );

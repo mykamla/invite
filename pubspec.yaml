@@ -70,7 +70,9 @@ dependencies:
   #agora_rtc_engine: ^4.0.2
   #agora_rtm: ^1.0.0-rc.1
   #agora_rtm: ^1.1.1
+  #agora_rtc_engine: ^5.3.0
   agora_rtc_engine: ^5.3.0
+
   #agora_uikit: ^1.0.3
   permission_handler:
 

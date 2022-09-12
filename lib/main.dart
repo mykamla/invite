@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +8,7 @@ import 'package:myliveevent/provider/eventState.dart';
 import 'package:myliveevent/theme/myTheme.dart';
 import 'package:myliveevent/ui/event/live/broacast.dart';
 import 'package:myliveevent/ui/event/live/live.dart';
+import 'package:myliveevent/ui/event/live/live_broadcast.dart';
 import 'package:myliveevent/ui/menu/my_bubble_bottom_bar.dart';
 import 'package:myliveevent/ui/profil/connection/auth.dart';
 import 'package:myliveevent/ui/profil/login.dart';
@@ -107,10 +110,11 @@ class RouteGenerator {
               );
             }
         );
-      case '/live':
-        final argument = settings.arguments as String;
+      case '/live_brodcast':
+        final arg = settings.arguments as String;
+        final argument = jsonDecode(arg);
         return PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation)=> Live(channelName: argument),
+            pageBuilder: (context, animation, secondaryAnimation)=> LiveBroadcast(channelName: argument[0], isBroadcaster: argument[1], uid: argument[2]),
             transitionsBuilder: (context, animation, secondaryAnimation, child) {
               animation = CurvedAnimation(curve: Curves.ease, parent: animation);
               return FadeTransition(

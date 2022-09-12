@@ -2,6 +2,9 @@ import 'package:chat_bubbles/bubbles/bubble_normal.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:myliveevent/model/event.dart';
+import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:uuid/uuid.dart';
 
 class Events extends StatefulWidget {
   Events({required this.uid, Key? key}) : super(key: key);
@@ -13,6 +16,8 @@ class Events extends StatefulWidget {
 
 class _EventsState extends State<Events> {
   final TextEditingController message = new TextEditingController();
+
+  final String _channelName = "mychan";
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +34,7 @@ class _EventsState extends State<Events> {
                     color: Colors.redAccent,
                     iconSize: 20,
                     onPressed: (){
-                      Navigator.pushNamed(context, '/live', arguments: {"uid": widget.uid!});
+                      onJoin(route:' /live_brodcast', uid: widget.uid!,  isBroadcaster: false);
                     },
                     icon: Icon(Icons.live_tv_outlined)),
                 trailing: SizedBox(
@@ -67,4 +72,27 @@ class _EventsState extends State<Events> {
       ),
     );
   }
+
+  Future<void> onJoin({required String route, required String uid,  required bool isBroadcaster}) async {
+    await [Permission.camera, Permission.microphone].request();
+
+    Navigator.pushNamed(context,'live_broadcast' , arguments:{
+      "channelName" : "${_channelName}_${uid}_${Uuid().v4()}",
+      "isBroadcaster" : isBroadcaster,
+      "uid": uid
+    });
+
+    /*
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => BroadcastPage(
+          channelName: _channelName,
+
+          isBroadcaster: isBroadcaster,
+        ),
+      ),
+    );
+    */
+  }
+
 }

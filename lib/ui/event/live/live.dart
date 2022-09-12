@@ -1,9 +1,9 @@
-import 'package:agora_rtm/agora_rtm.dart';
-import 'package:agora_uikit/agora_uikit.dart';
+//import 'package:agora_rtm/agora_rtm.dart';
+//import 'package:agora_uikit/agora_uikit.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import 'package:agora_rtc_engine/media_recorder.dart';
+//import 'package:agora_rtc_engine/media_recorder.dart';
 import 'package:agora_rtc_engine/rtc_channel.dart';
 import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:agora_rtc_engine/rtc_local_view.dart';
@@ -32,14 +32,14 @@ class _LiveState extends State<Live> {
 
 
   late RtcEngine _engine;
-  AgoraRtmClient? _client;
-  AgoraRtmChannel? _channel;
+ // AgoraRtmClient? _client;
+ // AgoraRtmChannel? _channel;
 
   List<int> _users = [];
   Future<void> initalizeAgora() async {
     _engine = await RtcEngine.createWithContext(RtcEngineContext(appId));
    // _engine.joinChannel(null, 'test', optionalInfo, optionalUid)
-    _client  = await AgoraRtmClient.createInstance(appId);
+  //  _client  = await AgoraRtmClient.createInstance(appId);
 
     await _engine.enableAudio();
     await _engine.enableVideo();
@@ -54,7 +54,7 @@ class _LiveState extends State<Live> {
           })
       )
     ));
-
+/*
     //Callback for the RTC Client
     _client?.onMessageReceived = (AgoraRtmMessage message, String peerId) {
       print("Private message from" + peerId+": " + (message.text));
@@ -89,7 +89,7 @@ class _LiveState extends State<Live> {
       //todo implement this
       print("Public message from: " + member.userId +": " + (message.text));
     };
-
+*/
   }
 
   @override

@@ -9,7 +9,9 @@ import 'package:myliveevent/ui/event/events.dart';
 import 'package:myliveevent/ui/profil/connection/services/database.dart';
 import 'package:myliveevent/model/user.dart';
 import 'package:myliveevent/widget/loading.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 
 class MyBubbleBottomBar extends StatelessWidget {
 
@@ -77,6 +79,7 @@ class _MyBottomPageState extends State<MyBottomPage> {
               : EventMap(),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
+              onJoin(route:' /live_brodcast', uid: '',  isBroadcaster: true);
               Navigator.pushNamed(context, '/broadcast');
             },
             child: Icon(Icons.add_circle_outline),
@@ -131,4 +134,29 @@ class _MyBottomPageState extends State<MyBottomPage> {
     );
 
   }
+
+  final String _channelName = "mychan";
+  Future<void> onJoin({required String route, required String uid,  required bool isBroadcaster}) async {
+    await [Permission.camera, Permission.microphone].request();
+
+    Navigator.pushNamed(context,'live_broadcast' , arguments:{
+      "channelName" : "${_channelName}_${uid}_${Uuid().v4()}",
+      "isBroadcaster" : isBroadcaster,
+      "uid": uid
+    });
+
+    /*
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => BroadcastPage(
+          channelName: _channelName,
+
+          isBroadcaster: isBroadcaster,
+        ),
+      ),
+    );
+    */
+  }
+
+
 }
