@@ -7,9 +7,8 @@ import 'package:agora_rtc_engine/rtc_channel.dart';
 import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:agora_rtc_engine/rtc_local_view.dart';
 import 'package:agora_rtc_engine/rtc_remote_view.dart';
-import 'package:myliveevent/ui/event/live/appId.dart';
+import 'package:myliveevent/ui/event/off/live/appId.dart';
 
-import '../../chat/chatpage.dart';
 
 class Broadcast extends StatefulWidget {
 

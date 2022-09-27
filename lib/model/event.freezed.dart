@@ -23,15 +23,14 @@ mixin _$Event {
   int? get id => throw _privateConstructorUsedError;
   String? get nom => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
-  String? get code => throw _privateConstructorUsedError;
+  String? get channel => throw _privateConstructorUsedError;
   DateTime? get date_debut => throw _privateConstructorUsedError;
   DateTime? get date_fin => throw _privateConstructorUsedError;
   bool? get live => throw _privateConstructorUsedError;
   int? get vue_max => throw _privateConstructorUsedError;
   int? get vue_en_cours => throw _privateConstructorUsedError;
-  String? get longitude => throw _privateConstructorUsedError;
-  String? get latitude => throw _privateConstructorUsedError;
-  User? get organisateur => throw _privateConstructorUsedError;
+  Map<String, dynamic>? get position => throw _privateConstructorUsedError;
+  String? get organisateur => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -46,17 +45,14 @@ abstract class $EventCopyWith<$Res> {
       {int? id,
       String? nom,
       String? description,
-      String? code,
+      String? channel,
       DateTime? date_debut,
       DateTime? date_fin,
       bool? live,
       int? vue_max,
       int? vue_en_cours,
-      String? longitude,
-      String? latitude,
-      User? organisateur});
-
-  $UserCopyWith<$Res>? get organisateur;
+      Map<String, dynamic>? position,
+      String? organisateur});
 }
 
 /// @nodoc
@@ -72,14 +68,13 @@ class _$EventCopyWithImpl<$Res> implements $EventCopyWith<$Res> {
     Object? id = freezed,
     Object? nom = freezed,
     Object? description = freezed,
-    Object? code = freezed,
+    Object? channel = freezed,
     Object? date_debut = freezed,
     Object? date_fin = freezed,
     Object? live = freezed,
     Object? vue_max = freezed,
     Object? vue_en_cours = freezed,
-    Object? longitude = freezed,
-    Object? latitude = freezed,
+    Object? position = freezed,
     Object? organisateur = freezed,
   }) {
     return _then(_value.copyWith(
@@ -95,9 +90,9 @@ class _$EventCopyWithImpl<$Res> implements $EventCopyWith<$Res> {
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
-      code: code == freezed
-          ? _value.code
-          : code // ignore: cast_nullable_to_non_nullable
+      channel: channel == freezed
+          ? _value.channel
+          : channel // ignore: cast_nullable_to_non_nullable
               as String?,
       date_debut: date_debut == freezed
           ? _value.date_debut
@@ -119,30 +114,15 @@ class _$EventCopyWithImpl<$Res> implements $EventCopyWith<$Res> {
           ? _value.vue_en_cours
           : vue_en_cours // ignore: cast_nullable_to_non_nullable
               as int?,
-      longitude: longitude == freezed
-          ? _value.longitude
-          : longitude // ignore: cast_nullable_to_non_nullable
-              as String?,
-      latitude: latitude == freezed
-          ? _value.latitude
-          : latitude // ignore: cast_nullable_to_non_nullable
-              as String?,
+      position: position == freezed
+          ? _value.position
+          : position // ignore: cast_nullable_to_non_nullable
+              as Map<String, dynamic>?,
       organisateur: organisateur == freezed
           ? _value.organisateur
           : organisateur // ignore: cast_nullable_to_non_nullable
-              as User?,
+              as String?,
     ));
-  }
-
-  @override
-  $UserCopyWith<$Res>? get organisateur {
-    if (_value.organisateur == null) {
-      return null;
-    }
-
-    return $UserCopyWith<$Res>(_value.organisateur!, (value) {
-      return _then(_value.copyWith(organisateur: value));
-    });
   }
 }
 
@@ -155,18 +135,14 @@ abstract class _$$_EventCopyWith<$Res> implements $EventCopyWith<$Res> {
       {int? id,
       String? nom,
       String? description,
-      String? code,
+      String? channel,
       DateTime? date_debut,
       DateTime? date_fin,
       bool? live,
       int? vue_max,
       int? vue_en_cours,
-      String? longitude,
-      String? latitude,
-      User? organisateur});
-
-  @override
-  $UserCopyWith<$Res>? get organisateur;
+      Map<String, dynamic>? position,
+      String? organisateur});
 }
 
 /// @nodoc
@@ -183,14 +159,13 @@ class __$$_EventCopyWithImpl<$Res> extends _$EventCopyWithImpl<$Res>
     Object? id = freezed,
     Object? nom = freezed,
     Object? description = freezed,
-    Object? code = freezed,
+    Object? channel = freezed,
     Object? date_debut = freezed,
     Object? date_fin = freezed,
     Object? live = freezed,
     Object? vue_max = freezed,
     Object? vue_en_cours = freezed,
-    Object? longitude = freezed,
-    Object? latitude = freezed,
+    Object? position = freezed,
     Object? organisateur = freezed,
   }) {
     return _then(_$_Event(
@@ -206,9 +181,9 @@ class __$$_EventCopyWithImpl<$Res> extends _$EventCopyWithImpl<$Res>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
-      code: code == freezed
-          ? _value.code
-          : code // ignore: cast_nullable_to_non_nullable
+      channel: channel == freezed
+          ? _value.channel
+          : channel // ignore: cast_nullable_to_non_nullable
               as String?,
       date_debut: date_debut == freezed
           ? _value.date_debut
@@ -230,18 +205,14 @@ class __$$_EventCopyWithImpl<$Res> extends _$EventCopyWithImpl<$Res>
           ? _value.vue_en_cours
           : vue_en_cours // ignore: cast_nullable_to_non_nullable
               as int?,
-      longitude: longitude == freezed
-          ? _value.longitude
-          : longitude // ignore: cast_nullable_to_non_nullable
-              as String?,
-      latitude: latitude == freezed
-          ? _value.latitude
-          : latitude // ignore: cast_nullable_to_non_nullable
-              as String?,
+      position: position == freezed
+          ? _value._position
+          : position // ignore: cast_nullable_to_non_nullable
+              as Map<String, dynamic>?,
       organisateur: organisateur == freezed
           ? _value.organisateur
           : organisateur // ignore: cast_nullable_to_non_nullable
-              as User?,
+              as String?,
     ));
   }
 }
@@ -253,15 +224,15 @@ class _$_Event implements _Event {
       {this.id,
       this.nom,
       this.description,
-      this.code,
+      this.channel,
       this.date_debut,
       this.date_fin,
       this.live,
       this.vue_max,
       this.vue_en_cours,
-      this.longitude,
-      this.latitude,
-      this.organisateur});
+      final Map<String, dynamic>? position,
+      this.organisateur})
+      : _position = position;
 
   factory _$_Event.fromJson(Map<String, dynamic> json) =>
       _$$_EventFromJson(json);
@@ -273,7 +244,7 @@ class _$_Event implements _Event {
   @override
   final String? description;
   @override
-  final String? code;
+  final String? channel;
   @override
   final DateTime? date_debut;
   @override
@@ -284,16 +255,21 @@ class _$_Event implements _Event {
   final int? vue_max;
   @override
   final int? vue_en_cours;
+  final Map<String, dynamic>? _position;
   @override
-  final String? longitude;
+  Map<String, dynamic>? get position {
+    final value = _position;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(value);
+  }
+
   @override
-  final String? latitude;
-  @override
-  final User? organisateur;
+  final String? organisateur;
 
   @override
   String toString() {
-    return 'Event(id: $id, nom: $nom, description: $description, code: $code, date_debut: $date_debut, date_fin: $date_fin, live: $live, vue_max: $vue_max, vue_en_cours: $vue_en_cours, longitude: $longitude, latitude: $latitude, organisateur: $organisateur)';
+    return 'Event(id: $id, nom: $nom, description: $description, channel: $channel, date_debut: $date_debut, date_fin: $date_fin, live: $live, vue_max: $vue_max, vue_en_cours: $vue_en_cours, position: $position, organisateur: $organisateur)';
   }
 
   @override
@@ -305,7 +281,7 @@ class _$_Event implements _Event {
             const DeepCollectionEquality().equals(other.nom, nom) &&
             const DeepCollectionEquality()
                 .equals(other.description, description) &&
-            const DeepCollectionEquality().equals(other.code, code) &&
+            const DeepCollectionEquality().equals(other.channel, channel) &&
             const DeepCollectionEquality()
                 .equals(other.date_debut, date_debut) &&
             const DeepCollectionEquality().equals(other.date_fin, date_fin) &&
@@ -313,8 +289,7 @@ class _$_Event implements _Event {
             const DeepCollectionEquality().equals(other.vue_max, vue_max) &&
             const DeepCollectionEquality()
                 .equals(other.vue_en_cours, vue_en_cours) &&
-            const DeepCollectionEquality().equals(other.longitude, longitude) &&
-            const DeepCollectionEquality().equals(other.latitude, latitude) &&
+            const DeepCollectionEquality().equals(other._position, _position) &&
             const DeepCollectionEquality()
                 .equals(other.organisateur, organisateur));
   }
@@ -326,14 +301,13 @@ class _$_Event implements _Event {
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(nom),
       const DeepCollectionEquality().hash(description),
-      const DeepCollectionEquality().hash(code),
+      const DeepCollectionEquality().hash(channel),
       const DeepCollectionEquality().hash(date_debut),
       const DeepCollectionEquality().hash(date_fin),
       const DeepCollectionEquality().hash(live),
       const DeepCollectionEquality().hash(vue_max),
       const DeepCollectionEquality().hash(vue_en_cours),
-      const DeepCollectionEquality().hash(longitude),
-      const DeepCollectionEquality().hash(latitude),
+      const DeepCollectionEquality().hash(_position),
       const DeepCollectionEquality().hash(organisateur));
 
   @JsonKey(ignore: true)
@@ -354,15 +328,14 @@ abstract class _Event implements Event {
       {final int? id,
       final String? nom,
       final String? description,
-      final String? code,
+      final String? channel,
       final DateTime? date_debut,
       final DateTime? date_fin,
       final bool? live,
       final int? vue_max,
       final int? vue_en_cours,
-      final String? longitude,
-      final String? latitude,
-      final User? organisateur}) = _$_Event;
+      final Map<String, dynamic>? position,
+      final String? organisateur}) = _$_Event;
 
   factory _Event.fromJson(Map<String, dynamic> json) = _$_Event.fromJson;
 
@@ -373,7 +346,7 @@ abstract class _Event implements Event {
   @override
   String? get description;
   @override
-  String? get code;
+  String? get channel;
   @override
   DateTime? get date_debut;
   @override
@@ -385,11 +358,9 @@ abstract class _Event implements Event {
   @override
   int? get vue_en_cours;
   @override
-  String? get longitude;
+  Map<String, dynamic>? get position;
   @override
-  String? get latitude;
-  @override
-  User? get organisateur;
+  String? get organisateur;
   @override
   @JsonKey(ignore: true)
   _$$_EventCopyWith<_$_Event> get copyWith =>

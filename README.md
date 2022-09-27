@@ -1,5 +1,7 @@
 # myliveevent
 
+https://pub.dev/packages/video_trimmer
+
 A new Flutter project.
 
 ## Getting Started

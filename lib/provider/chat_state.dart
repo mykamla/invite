@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:myliveevent/provider/disposable_provider.dart';
 
-class EventState extends DisposableProvider {
+class ChatState extends DisposableProvider {
 
   List<Map<String, dynamic>>? _messages = [];
 

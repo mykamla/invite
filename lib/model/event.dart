@@ -14,15 +14,14 @@ abstract class Event with _$Event {
     int? id,
     String? nom,
     String? description,
-    String? code,
+    String? channel,
     DateTime? date_debut,
     DateTime? date_fin,
     bool? live,
     int? vue_max,
     int? vue_en_cours,
-    String? longitude,
-    String? latitude,
-    User? organisateur
+    Map<String, dynamic>? position,
+    String? organisateur //email organisateur
   }) = _Event;
 
   factory Event.fromJson(Map<String, dynamic> json) => _$EventFromJson(json);

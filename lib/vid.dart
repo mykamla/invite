@@ -1,3 +1,4 @@
+/*
 import 'dart:core';
 
 import 'package:flutter/material.dart';
@@ -136,3 +137,4 @@ class _VidState extends State<Vid> {
     ];
   }
 }
+*/

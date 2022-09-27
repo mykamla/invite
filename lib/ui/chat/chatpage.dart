@@ -1,14 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../profil/login.dart';
 import 'message.dart';
 
 class ChatPage extends StatefulWidget {
-  ChatPage({required this.email, required this.codeEvent});
+  ChatPage({required this.email, required this.uidEvent});
 
   String? email;
-  String? codeEvent;
+  String? uidEvent;
 
   @override
   _ChatPageState createState() => _ChatPageState();
@@ -31,6 +32,7 @@ class _ChatPageState extends State<ChatPage> {
             height: MediaQuery.of(context).size.height * 0.40,
             child: messages(
               email: widget.email!,
+              uidEvent: widget.uidEvent,
             ),
           ),
           Row(
@@ -63,13 +65,13 @@ class _ChatPageState extends State<ChatPage> {
                       'message': msgController!.text.trim(),
                       'time': DateTime.now(),
                       'email': widget.email,
-                      'event': widget.codeEvent,
+                      'uid_event': widget.uidEvent,
                     });
 
                     msgController!.clear();
                   }
                 },
-                icon: Icon(Icons.send_sharp),
+                icon: Icon(CupertinoIcons.paperplane),
               ),
             ],
           ),

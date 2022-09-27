@@ -38,7 +38,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                     label: Text('drink', style: TextStyle(color: Colors.white)),
                     onPressed: () async {
-                      await database.saveUser(userData.nom!);
+                   //   await database.saveUser(userData.nom!);
                     },
                   );
                 } else {
@@ -53,7 +53,7 @@ class HomeScreen extends StatelessWidget {
               ),
               label: Text('logout', style: TextStyle(color: Colors.white)),
               onPressed: () async {
-                await _auth.signOut();
+             //   await _auth.signOut();
               },
             )
           ],

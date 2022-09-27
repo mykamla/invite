@@ -1,22 +1,21 @@
-import 'dart:convert';
-
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:myliveevent/provider/eventState.dart';
-import 'package:myliveevent/theme/myTheme.dart';
-import 'package:myliveevent/ui/event/live/broacast.dart';
-import 'package:myliveevent/ui/event/live/live.dart';
-import 'package:myliveevent/ui/event/live/live_broadcast.dart';
-import 'package:myliveevent/ui/menu/my_bubble_bottom_bar.dart';
+import 'package:myliveevent/model/app_user.dart';
+import 'package:myliveevent/provider/chat_state.dart';
+import 'package:myliveevent/provider/event_state.dart';
+import 'package:myliveevent/theme/my_theme.dart';
+import 'package:myliveevent/ui/chat/chatpage.dart';
+import 'package:myliveevent/ui/event/add_event.dart';
+import 'package:myliveevent/ui/event/map/map_page.dart';
+import 'package:myliveevent/ui/event/spotify/example.dart';
+import 'package:myliveevent/ui/event/video/read_video.dart';
+import 'package:myliveevent/ui/event/video/upload_video.dart';
+import 'package:myliveevent/ui/menu/my_bottom_menu.dart';
 import 'package:myliveevent/ui/profil/connection/auth.dart';
-import 'package:myliveevent/ui/profil/login.dart';
 import 'package:myliveevent/ui/profil/register.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:myliveevent/provider/chatState.dart';
 import 'package:provider/provider.dart';
-import 'package:myliveevent/ui/chat/chatUI.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
@@ -40,8 +39,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Exemple().m();
     return MultiProvider(
         providers: [
+          ChangeNotifierProvider(create: (context) => AppUser('')),
           ChangeNotifierProvider(create: (context) => ChatState()),
           ChangeNotifierProvider(create: (context) => EventState()),
         ],
@@ -66,7 +67,8 @@ class RouteGenerator {
       case '/' :
        // return MaterialPageRoute(builder: (context) => MyBubbleBottomBar());
         return MaterialPageRoute(builder: (context) => Auth());
-      case '/events':
+      /*
+        case '/events':
         return PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation)=> ChatUI(),
             transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -77,9 +79,24 @@ class RouteGenerator {
               );
             }
         );
-      case '/login':
+        */
+      case '/upload_video':
+        final arg = settings.arguments as Map<String, dynamic>;
         return PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation)=> Login(),
+            pageBuilder: (context, animation, secondaryAnimation)=> UploadVideo(
+                nom: arg['nom'], description: arg['description']),
+            transitionsBuilder: (context, animation, secondaryAnimation, child) {
+              animation = CurvedAnimation(curve: Curves.ease, parent: animation);
+              return FadeTransition(
+                opacity:animation,
+                child: child,
+              );
+            }
+        );
+      case '/map':
+        final arg = settings.arguments as Map<String, dynamic>;
+        return PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation)=> MapPage(uid: arg['uid'], email: arg['email'], nomUser: arg['nom'], photo: arg['photo']),
             transitionsBuilder: (context, animation, secondaryAnimation, child) {
               animation = CurvedAnimation(curve: Curves.ease, parent: animation);
               return FadeTransition(
@@ -99,9 +116,10 @@ class RouteGenerator {
               );
             }
         );
-      case '/broadcast':
+      case '/add_event':
+        final arg = settings.arguments as Map<String, dynamic>;
         return PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation)=> Broadcast(),
+            pageBuilder: (context, animation, secondaryAnimation)=> AddEvent(),
             transitionsBuilder: (context, animation, secondaryAnimation, child) {
               animation = CurvedAnimation(curve: Curves.ease, parent: animation);
               return FadeTransition(
@@ -110,11 +128,57 @@ class RouteGenerator {
               );
             }
         );
-      case '/live_brodcast':
-        final arg = settings.arguments as String;
-        final argument = jsonDecode(arg);
+      case '/read_video':
+        final arg = settings.arguments as Map<String, dynamic>;
         return PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation)=> LiveBroadcast(channelName: argument[0], isBroadcaster: argument[1], uid: argument[2]),
+            pageBuilder: (context, animation, secondaryAnimation)=> ReadVideo(
+                email: arg['email'],
+                dateDebut: arg['dateDebut'],
+                dateFin: arg['dateFin'],
+                description: arg['description'],
+                nomEvent: arg['nomEvent'],
+                nomUser: arg['nomUser'],
+                videoLink: arg['videoLink'],
+                vueMax: arg['vueMax'],
+                organisateur: arg['organisateur'],
+            ),
+            transitionsBuilder: (context, animation, secondaryAnimation, child) {
+              animation = CurvedAnimation(curve: Curves.ease, parent: animation);
+              return FadeTransition(
+                opacity:animation,
+                child: child,
+              );
+            }
+        );
+
+      case '/read_video':
+        final arg = settings.arguments as Map<String, dynamic>;
+        return PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation)=> ReadVideo(
+              email: arg['email'],
+              dateDebut: arg['dateDebut'],
+              dateFin: arg['dateFin'],
+              description: arg['description'],
+              nomEvent: arg['nomEvent'],
+              nomUser: arg['nomUser'],
+              videoLink: arg['videoLink'],
+              vueMax: arg['vueMax'],
+              organisateur: arg['organisateur'],
+            ),
+            transitionsBuilder: (context, animation, secondaryAnimation, child) {
+              animation = CurvedAnimation(curve: Curves.ease, parent: animation);
+              return FadeTransition(
+                opacity:animation,
+                child: child,
+              );
+            }
+        );
+
+      case '/my_bottom_menu':
+        final arg = settings.arguments as Map<String, dynamic>;
+        return PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation)=> MyBottomMenu(
+                user: arg['user'], uid: arg['uid']),
             transitionsBuilder: (context, animation, secondaryAnimation, child) {
               animation = CurvedAnimation(curve: Curves.ease, parent: animation);
               return FadeTransition(

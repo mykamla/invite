@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:agora_rtc_engine/rtc_local_view.dart' as RtcLocalView;
 import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
-import 'package:myliveevent/theme/myTheme.dart';
-import 'package:myliveevent/ui/event/live/appId.dart';
+import 'package:myliveevent/theme/my_theme.dart';
+import 'package:myliveevent/ui/event/off/live/appId.dart';
 
 class LiveBroadcast extends StatefulWidget {
   final String? channelName;
@@ -36,6 +36,10 @@ class _LiveBroadcastState extends State<LiveBroadcast> {
   void initState() {
     super.initState();
     // initialize agora sdk
+    print("azerty 000");
+    print(widget.channelName);
+    print(widget.isBroadcaster);
+    print(widget.uid);
     initializeAgora();
   }
 

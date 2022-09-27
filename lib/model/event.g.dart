@@ -10,7 +10,7 @@ _$_Event _$$_EventFromJson(Map<String, dynamic> json) => _$_Event(
       id: json['id'] as int?,
       nom: json['nom'] as String?,
       description: json['description'] as String?,
-      code: json['code'] as String?,
+      channel: json['channel'] as String?,
       date_debut: json['date_debut'] == null
           ? null
           : DateTime.parse(json['date_debut'] as String),
@@ -20,24 +20,20 @@ _$_Event _$$_EventFromJson(Map<String, dynamic> json) => _$_Event(
       live: json['live'] as bool?,
       vue_max: json['vue_max'] as int?,
       vue_en_cours: json['vue_en_cours'] as int?,
-      longitude: json['longitude'] as String?,
-      latitude: json['latitude'] as String?,
-      organisateur: json['organisateur'] == null
-          ? null
-          : User.fromJson(json['organisateur'] as Map<String, dynamic>),
+      position: json['position'] as Map<String, dynamic>?,
+      organisateur: json['organisateur'] as String?,
     );
 
 Map<String, dynamic> _$$_EventToJson(_$_Event instance) => <String, dynamic>{
       'id': instance.id,
       'nom': instance.nom,
       'description': instance.description,
-      'code': instance.code,
+      'channel': instance.channel,
       'date_debut': instance.date_debut?.toIso8601String(),
       'date_fin': instance.date_fin?.toIso8601String(),
       'live': instance.live,
       'vue_max': instance.vue_max,
       'vue_en_cours': instance.vue_en_cours,
-      'longitude': instance.longitude,
-      'latitude': instance.latitude,
+      'position': instance.position,
       'organisateur': instance.organisateur,
     };

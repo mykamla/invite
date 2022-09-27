@@ -8,31 +8,34 @@ import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class messages extends StatefulWidget {
-  String email;
-  messages({required this.email});
+  String? email;
+  String? uidEvent;
+  messages({required this.email, required this.uidEvent});
   @override
-  _messagesState createState() => _messagesState(email: email);
+  _messagesState createState() => _messagesState();
 }
 
 class _messagesState extends State<messages> {
-  String email;
-  _messagesState({required this.email});
 
   final _myListKey = GlobalKey<AnimatedListState>();
 
-  Stream<QuerySnapshot> _messageStream = FirebaseFirestore.instance
-      .collection('messages')
-      .orderBy('time')
-      .snapshots();
+
   @override
   Widget build(BuildContext context) {
+
+    Stream<QuerySnapshot> _messageStream = FirebaseFirestore.instance
+        .collection('messages')
+        .where('uid_event', isEqualTo: widget.uidEvent)
+        .orderBy('time')
+        .snapshots();
+
     return StreamBuilder(
       stream: _messageStream,
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
           return Text("something is wrong");
         }
-        if (snapshot.connectionState != ConnectionState.waiting) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(
             child: LoadingAnimationWidget.hexagonDots(
               color: Colors.white,
@@ -61,7 +64,7 @@ class _messagesState extends State<messages> {
             return Padding(
               padding: const EdgeInsets.only(top: 3, bottom: 3),
               child: Column(
-                crossAxisAlignment: email == msgs['email']
+                crossAxisAlignment: widget.email == msgs['email']
                     ? CrossAxisAlignment.end
                     : CrossAxisAlignment.start,
                 children: [

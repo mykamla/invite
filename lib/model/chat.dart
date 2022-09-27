@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:myliveevent/enumeration/msgType.dart';
+import 'package:myliveevent/enumeration/msg_type.dart';
 import 'package:myliveevent/model/event.dart';
 import 'package:myliveevent/model/user.dart';
 
