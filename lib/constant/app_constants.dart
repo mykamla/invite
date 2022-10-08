@@ -11,7 +11,7 @@ class AppConstants {
 
   static const String mapBoxStyleId = 'cl82y5vc3007a14qgeavj34nj';
 
-  static var myLocation = LatLng(51.5090214, -0.1982948);
+  //static var myLocation = LatLng(51.5090214, -0.1982948);
 
   /// Determine the current position of the device.
   ///

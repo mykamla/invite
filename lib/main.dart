@@ -15,7 +15,6 @@ import 'package:myliveevent/ui/event/video/upload_video.dart';
 import 'package:myliveevent/ui/menu/my_bottom_menu.dart';
 import 'package:myliveevent/ui/profil/authenticate/reset_password_screen.dart';
 import 'package:myliveevent/ui/profil/connection/auth.dart';
-import 'package:myliveevent/ui/profil/register.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -95,17 +94,6 @@ class RouteGenerator {
         final arg = settings.arguments as Map<String, dynamic>;
         return PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation)=> MapPage(uid: arg['uid'], email: arg['email'], nomUser: arg['nom'], photo: arg['photo']),
-            transitionsBuilder: (context, animation, secondaryAnimation, child) {
-              animation = CurvedAnimation(curve: Curves.ease, parent: animation);
-              return FadeTransition(
-                opacity:animation,
-                child: child,
-              );
-            }
-        );
-        case '/register':
-        return PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation)=> Register(),
             transitionsBuilder: (context, animation, secondaryAnimation, child) {
               animation = CurvedAnimation(curve: Curves.ease, parent: animation);
               return FadeTransition(
