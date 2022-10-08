@@ -63,7 +63,7 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
     });
 
     return loading
-        ? Scaffold(backgroundColor: PrimaryColor, body: Loading(iconColor: Colors.green,),)
+        ? Scaffold(backgroundColor: PrimaryColor, body: Loading(iconColor: selectedIndex == 1 ? YellowColor : PinkColor,),)
         : Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -131,7 +131,7 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
                                     setState(() {});
                                   },
                                   child: Text("S'identifier",
-                                      style: TextStyle(fontSize: 18, color: PrimaryColor), textAlign: TextAlign.center),
+                                      style: TextStyle(fontSize: 15, color: PrimaryColor), textAlign: TextAlign.center),
 
                                   style: ButtonStyle(
                                       padding: MaterialStateProperty.all(EdgeInsets.all(10)),
@@ -183,7 +183,7 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
                                     setState(() {});
                                   },
                                   child: Text("S'inscrire",
-                                      style: TextStyle(fontSize: 18, color: PrimaryColor), textAlign: TextAlign.center),
+                                      style: TextStyle(fontSize: 15, color: PrimaryColor), textAlign: TextAlign.center),
                                   style: ButtonStyle(
                                       padding: MaterialStateProperty.all(EdgeInsets.all(10)),
                                       backgroundColor: MaterialStateColor.resolveWith((states) => PinkColor),
@@ -207,6 +207,7 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
                                   child: Form(
                                     key: selectedIndex != 1 ? Key("1") : _formKey,
                                     child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         //email
                                         Container(
@@ -263,7 +264,17 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
                                             //  border: Border.all(color: PrimaryColorLight),
                                             borderRadius: BorderRadius.all(Radius.circular(8.0)),
                                           ),),
-                                        SizedBox(height: 10.0),
+                                        SizedBox(height: 15.0),
+                                        //forgot password
+                                        Container(
+                                          padding: EdgeInsets.only(left: 5, right: 0),
+                                          child: GestureDetector(
+                                            onTap: (){
+                                              Navigator.pushNamed(context, '/reset_password');
+                                            },
+                                            child: Text('Mot de passe oublié', style: TextStyle(color: Colors.white, decoration: TextDecoration.underline),),
+                                          ),),
+                                        SizedBox(height: 20.0),
                                         Container(
                                           margin: EdgeInsets.only(left: 30, right: 30),
                                           width: double.infinity,
@@ -281,7 +292,7 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
                                           ),
                                           child: Text(
                                             "S'dentifier",
-                                            style: TextStyle(color: Colors.white),
+                                            style: TextStyle(color: PrimaryColor),
                                           ),
                                           onPressed: () async {
                                             if (_formKey.currentState?.validate() == true) {

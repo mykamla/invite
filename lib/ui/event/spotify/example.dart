@@ -5,13 +5,11 @@ import 'package:spotify/spotify.dart';
 
 class Exemple {
 
-
   void m() async {
-    // var keyJson = await File('assets/spotify/api_keys.json').readAsString();
-    // var keyMap = json.decode(keyJson);
-
     var credentials = SpotifyApiCredentials(SpotifyConstants.idSpotify, SpotifyConstants.secretSpotify);
     var spotify = SpotifyApi(credentials);
+    // var keyJson = await File('assets/spotify/api_keys.json').readAsString();
+    // var keyMap = json.decode(keyJson);
 
     print('\nPodcast:');
     await spotify.shows.get('4rOoJ6Egrf8K2IrywzwOMk')
@@ -23,7 +21,6 @@ class Exemple {
     await episodes.first()
         .then((first) => print(first.items!.first))
         .onError((error, stackTrace) => print((error as SpotifyException).message));
-
 
     print('\nArtists:');
     var artists = await spotify.artists.list(['0OdUWJ0sBjDrqHygGUXeCF']);
@@ -46,9 +43,10 @@ class Exemple {
     });
 
     print('\nUser\'s playlists:');
-    var usersPlaylists = await spotify.playlists.getUsersPlaylists('superinteressante').all();
+    var usersPlaylists = await spotify.playlists.getUsersPlaylists('akon').all();
     usersPlaylists.forEach((playlist) {
-      print(playlist.owner!.uri);
+      print(usersPlaylists.length);
+      print(playlist);
     });
 
     print("\nSearching for \'Metallica\':");

@@ -1,11 +1,19 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:myliveevent/constant/app_constants.dart';
+import 'package:myliveevent/provider/event_state.dart';
 import 'package:myliveevent/theme/my_theme.dart';
+import 'package:myliveevent/widget/loading.dart';
+import 'package:myliveevent/widget/rotate.dart';
+import 'package:provider/provider.dart';
+import 'package:text_scroll/text_scroll.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MapPage extends StatefulWidget {
   MapPage({required this.uid, required this.nomUser, required this.email, required this.photo, Key? key}) : super(key: key);
@@ -18,7 +26,7 @@ class MapPage extends StatefulWidget {
   State<MapPage> createState() => _MapPageState();
 }
 
-class _MapPageState extends State<MapPage> with TickerProviderStateMixin {
+class _MapPageState extends State<MapPage> with TickerProviderStateMixin, AutomaticKeepAliveClientMixin<MapPage> {
   final pageController = PageController();
   int selectedIndex = 0;
 
@@ -36,16 +44,17 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin {
   final Stream<QuerySnapshot> _eventStream = FirebaseFirestore.instance
       .collection('events')
       .orderBy('date_debut', descending: true)
-      .limit(200)
+      .limit(1000)
       .snapshots();
 
 
   @override
   Widget build(BuildContext context) {
-//    var currentLocation = AppConstants.myLocation;
     AppConstants().myPosition(context);
-
+    var eventState = Provider.of<EventState>(context, listen: false);
+    var currentLocation =  LatLng(eventState.latitude, eventState.longitude);
     return Scaffold(
+      backgroundColor: PrimaryColor,
       body: StreamBuilder<QuerySnapshot>(
         stream: _eventStream,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -56,27 +65,25 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin {
 
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
-              child: LoadingAnimationWidget.hexagonDots(
-                color: PrimaryColor,
-                size: 40,
-              ),
+              child: Loading()
             );
           }
-var event = snapshot.data!.docs;
 
+          var event = snapshot.data!.docs;
           return Stack(
             children: [
               FlutterMap(
                 mapController: mapController,
                 options: MapOptions(
                   minZoom: 5,
-                  maxZoom: 18,
-                  zoom: 11,
+                  maxZoom: 200,
+                  zoom: 15,
               //    center: currentLocation,
                   center: LatLng(event[0]['position']['latitude'], event[0]['position']['longitude']),
                 ),
                 layers: [
                   TileLayerOptions(
+                    backgroundColor: PrimaryColor,
                     urlTemplate:
                     "https://api.mapbox.com/styles/v1/kamla/{mapStyleId}/tiles/256/{z}/{x}/{y}@2x?access_token={accessToken}",
                     additionalOptions: {
@@ -109,12 +116,12 @@ var event = snapshot.data!.docs;
                               },
                               child: AnimatedScale(
                                 duration: const Duration(milliseconds: 500),
-                                scale: selectedIndex == i ? 1 : 0.7,
+                                scale: selectedIndex == i ? 0.5 : 0.4,
                                 child: AnimatedOpacity(
                                   duration: const Duration(milliseconds: 500),
-                                  opacity: selectedIndex == i ? 1 : 0.5,
+                                  opacity: selectedIndex == i ? 1 : 1,
                                   child: SvgPicture.asset(
-                                    'assets/icons/map_marker.svg',
+                                    selectedIndex == i ? 'assets/svg/yellow_map_marker.svg' : 'assets/svg/pink_point_marker.svg',
                                   ),
                                 ),
                               ),
@@ -129,7 +136,7 @@ var event = snapshot.data!.docs;
                 left: 0,
                 right: 0,
                 bottom: 2,
-                height: MediaQuery.of(context).size.height * 0.3,
+                height: MediaQuery.of(context).size.height * 0.25,
                 child: PageView.builder(
                   controller: pageController,
                   onPageChanged: (value) {
@@ -144,57 +151,129 @@ var event = snapshot.data!.docs;
                   itemBuilder: (_, index) {
                //     final item = mapMarkers[index];
                     final item = event[index];
-                    return Padding(
-                      padding: const EdgeInsets.all(0.0),
-                      child: Card(
-                        elevation: 5,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        color: PrimaryColor300,
+                    String uidEvent = item.id;
+                    Map<String, dynamic> playlist = !((item.data() as Map).containsKey('playlist')) ? {} : item['playlist']??{};
+                    String playlistName = !((item.data() as Map).containsKey('playlist')) ? '' : item['playlist']?['name']??'';
+                    String playlistFirstImageUrl = !((item.data() as Map).containsKey('playlist')) ? '' : (item['playlist']?['images']?[0]??'').toString();
+                    String playlistUri = !((item.data() as Map).containsKey('playlist')) ? '' : item['playlist']?['uri']??'';
+                    String nomEvent = item['nom']??'';
+                    String eventDescription = item['description']??'';
+
+                    print('@@lon');
+                    print(playlistFirstImageUrl);
+                    print(playlistFirstImageUrl.runtimeType);
+                    print(playlistUri);
+
+                    return Card(
+                      margin: const EdgeInsets.all(10.0),
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      color: PrimaryColor,
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const SizedBox(width: 10),
                             Expanded(
                               child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Expanded(
+                                      flex: 0,
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.start,
                                         children: [
                                           IconButton(
-                                            onPressed: (){
-                                              Navigator.pushNamed(context, '/chat_page' , arguments:{
-                                                "email" : widget.email,
-                                                "uidEvent": 'uidEvent' //todo get uidEvent
-                                              });
-                                            },
-                                            icon: Icon(Icons.chat_bubble)),
-                                          IconButton(
-                                              onPressed: (){},
-                                              icon: Icon(Icons.library_music_outlined))
+                                              onPressed: (){
+                                                Navigator.pushNamed(context, '/chat_page',
+                                                    arguments: {
+                                                      'uidEvent': uidEvent,
+                                                      'email' : eventState.email,
+                                                      'nomUser': eventState.nomUser,
+                                                      'nomEvent': nomEvent
+                                                    });
+                                              },
+                                              icon: Icon(CupertinoIcons.chat_bubble_text_fill, color: YellowColor,)),
+
+                                          ((playlistFirstImageUrl.isNotEmpty)
+                                              ? Expanded(
+                                              flex: 0,
+                                              child: GestureDetector(
+                                                child: ClipRRect(
+                                                  borderRadius: BorderRadius.circular(80.0),
+                                                  child: Rotate(
+                                                    child: CachedNetworkImage(
+                                                      width: 30,
+                                                      height: 30,
+                                                      fit: BoxFit.fill,
+                                                      imageUrl: playlistFirstImageUrl,
+                                                      progressIndicatorBuilder: (context, url, downloadProgress) =>
+                                                          Loading(),
+                                                      errorWidget: (context, url, error) => SizedBox(),
+                                                    ),
+                                                  ),
+                                                ),
+                                                onLongPress: () async {
+                                                  final Uri _url = Uri.parse(playlistUri);
+                                                  try{
+                                                    // Launch the url which will open Spotify
+                                                    launchUrl(_url);
+                                                  }catch(e){}
+
+                                                },
+                                              )
+                                          )
+                                              : SizedBox()
+                                          ),
+                                          SizedBox(width: 5,),
+                                          Expanded(
+                                            child: TextScroll(
+                                              playlistName,
+                                              mode: TextScrollMode.bouncing,
+                                              velocity: Velocity(pixelsPerSecond: Offset(50, 0)),
+                                              delayBefore: Duration(milliseconds: 500),
+                                              numberOfReps: 5,
+                                              pauseBetween: Duration(milliseconds: 50),
+                                              style: TextStyle(color: YellowColor),
+                                              textAlign: TextAlign.left,
+                                              selectable: true,
+                                            )
+                                          )
+
                                         ],
                                       )
                                   ),
                                   Expanded(
-                                    flex: 2,
+                                    flex: 1,
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.start,
                                       children: [
-                                        Text(
-                                          item['nom'] ?? '',
-                                          style: const TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
+                                        Flexible(
+                                          child: Text(
+                                            nomEvent,
+                                            style: const TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                              color: YellowColor
+                                            ),
+                                            overflow: TextOverflow.ellipsis,
                                           ),
                                         ),
                                         const SizedBox(height: 10),
-                                        Text(
-                                          item['description']?? '',
-                                          style: const TextStyle(
-                                            fontSize: 14,
-                                            color: Colors.grey,
+                                        Expanded(
+                                          child: SingleChildScrollView(
+                                            scrollDirection: Axis.vertical,
+                                            child: Text(
+                                              eventDescription,
+                                              style: const TextStyle(
+                                                fontSize: 14,
+                                                color: PinkColor,
+                                              ),
+                                            ),
                                           ),
                                         ),
                                       ],
@@ -205,34 +284,38 @@ var event = snapshot.data!.docs;
                             ),
                             const SizedBox(width: 10),
                             Expanded(
+                              flex: 0,
                               child: Padding(
-                                padding: const EdgeInsets.all(4.0),
+                                padding: const EdgeInsets.all(0.0),
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(10),
                                   child: IconButton(
                                     onPressed: (){
+                                      Navigator.pushNamed(context, '/event_list',
+                                          arguments: {'event': {
+                                            'nomEvent': nomEvent,
+                                            'uidEvent': uidEvent,
+                                            'description': item['description']?? '',
+                                            'dateDebut': DateTime.fromMillisecondsSinceEpoch((item['date_debut'] ?? 0).millisecondsSinceEpoch),
+                                            'vueMax': item['vue_max'],
+                                            'videoLink' : item['video_link'],
+                                            'organisateur' : item['organisateur']?? '',
+                                            'playlist': playlist,
+                                            'nomUser': widget.nomUser
+                                          }
+                                          }
+                                      );
 
-                                      Navigator.pushNamed(context, '/read_video' , arguments:{
-                                        "nomUser" : widget.nomUser,
-                                        "email" : widget.email,
-                                        "videoLink": item['video_link'],
-                                        "dateDebut": DateTime.fromMillisecondsSinceEpoch((item['date_debut'] ?? 0).millisecondsSinceEpoch),
-                                        "dateFin": DateTime.fromMillisecondsSinceEpoch((item['date_fin'] ?? 0).millisecondsSinceEpoch),
-                                        "vueMax": item['vue_max'],
-                                        "nomEvent" : item['nom']?? '',
-                                        "description" : item['description']?? '',
-                                        "organisateur" : item['organisateur']?? '',
-                                      });
+
                                     },
-                                    icon: Icon(Icons.play_circle_outline, size: 50, color: Colors.white,),
+                                    icon: Icon(Icons.video_collection_outlined, size: 40, color: PinkColor,),
                                   ),
                                 ),
                               ),
                             ),
-                            const SizedBox(width: 10),
                           ],
                         ),
-                      ),
+                      )
                     );
                   },
                 ),
@@ -240,16 +323,15 @@ var event = snapshot.data!.docs;
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  ElevatedButton(
+                  IconButton(
                       onPressed: () {
                         _moveToMyLoc(currentLocation, 11.5);
                       },
-                      child: Row(
-                        children: [
-                          Icon(Icons.radio_button_checked),
-                          Text('Ma position')
-                        ],
-                      ))
+                    iconSize: 40,
+                    color: YellowColor,
+                    tooltip: 'Ma position',
+                      icon: Icon(CupertinoIcons.map_pin_ellipse),
+                  )
                 ],
               )
             ],
@@ -329,6 +411,10 @@ var event = snapshot.data!.docs;
 
     controller.forward();
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 
   /*
   /// Determine the current position of the device.

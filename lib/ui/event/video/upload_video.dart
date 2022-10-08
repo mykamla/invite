@@ -9,10 +9,13 @@ import 'package:myliveevent/theme/my_theme.dart';
 import 'package:myliveevent/ui/event/video/flutter_camera.dart';
 
 class UploadVideo extends StatefulWidget {
-  UploadVideo({Key? key, required this.nom, required this.description}) : super(key: key);
+  UploadVideo({Key? key, required this.nom, required this.description, this.uidEvent, this.videoList, required this.playlist}) : super(key: key);
 
   String? nom;
   String? description;
+  String? uidEvent;
+  List? videoList;
+  Map<String, dynamic>? playlist;
 
   @override
   _UploadVideoState createState() => _UploadVideoState();
@@ -28,11 +31,7 @@ class _UploadVideoState extends State<UploadVideo> {
   @override
   void initState() {
     super.initState();
-    print("object@@");
-    print(widget.nom);
-    print(widget.description);
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -44,16 +43,14 @@ class _UploadVideoState extends State<UploadVideo> {
             color: Colors.transparent,
             onVideoRecorded: (value) async {
               final path = value.path;
-
-              print('@@okY');
-              print(path);
-
-              await EventController().addEvent(context: context, nom: widget.nom!, description: widget.description!, videoPath: path);
+              (widget.uidEvent == null ||widget.uidEvent == '')
+              //first upload
+              ? await EventController().addEvent(context: context, nom: widget.nom??'', description: widget.description??'', playlist: widget.playlist??{}, videoPath: path)
+              // add only new video in event
+              : await EventController().addVideoInEvent(context: context, uidEvent: widget.uidEvent!, videoList: widget.videoList!, videoPath: path);
             },),
-
         ],
       ),
     );
   }
-
 }

@@ -76,7 +76,7 @@ class _ChatPageState extends State<ChatPage> {
       "msg": message['msg'],
       "type": MsgType.sent,
       "sender": User.fromJson(user),
-      "time": DateTime.now(),
+      "time": DateTime.now().toUtc(),
       "event": Event.fromJson(event)
     };
 

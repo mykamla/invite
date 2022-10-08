@@ -2,8 +2,8 @@
 // Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-import 'package:text_divider/src/direction.dart';
 import 'package:flutter/material.dart';
+import 'package:myliveevent/widget/text_divider/src/direction.dart';
 
 /// This class is a widget that provides the ability to display arbitrary text in the center of the divider.
 ///

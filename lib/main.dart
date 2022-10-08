@@ -8,18 +8,17 @@ import 'package:myliveevent/provider/event_state.dart';
 import 'package:myliveevent/theme/my_theme.dart';
 import 'package:myliveevent/ui/chat/chatpage.dart';
 import 'package:myliveevent/ui/event/add_event.dart';
+import 'package:myliveevent/ui/event/events_list.dart';
 import 'package:myliveevent/ui/event/map/map_page.dart';
-import 'package:myliveevent/ui/event/spotify/example.dart';
 import 'package:myliveevent/ui/event/video/read_video.dart';
 import 'package:myliveevent/ui/event/video/upload_video.dart';
 import 'package:myliveevent/ui/menu/my_bottom_menu.dart';
+import 'package:myliveevent/ui/profil/authenticate/reset_password_screen.dart';
 import 'package:myliveevent/ui/profil/connection/auth.dart';
 import 'package:myliveevent/ui/profil/register.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-
-
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,7 +38,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Exemple().m();
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context) => AppUser('')),
@@ -47,7 +45,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (context) => EventState()),
         ],
         child: MaterialApp(
-          title: 'APP Dec',
+          title: '',
           theme: ThemeData(
             primaryColor: PrimaryColor,
             primarySwatch: PrimarySwatch,
@@ -84,7 +82,7 @@ class RouteGenerator {
         final arg = settings.arguments as Map<String, dynamic>;
         return PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation)=> UploadVideo(
-                nom: arg['nom'], description: arg['description']),
+                nom: arg['nom'], description: arg['description'], playlist: arg['playlist'], uidEvent: arg['uidEvent']??'', videoList: arg['videoList']??[]),
             transitionsBuilder: (context, animation, secondaryAnimation, child) {
               animation = CurvedAnimation(curve: Curves.ease, parent: animation);
               return FadeTransition(
@@ -128,19 +126,25 @@ class RouteGenerator {
               );
             }
         );
-      case '/read_video':
+      case '/event_list':
+        final arg = settings.arguments as Map<String, dynamic>;
+        return PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation)=> EventsList(event: arg['event']),
+            transitionsBuilder: (context, animation, secondaryAnimation, child) {
+              animation = CurvedAnimation(curve: Curves.ease, parent: animation);
+              return FadeTransition(
+                opacity:animation,
+                child: child,
+              );
+            }
+        );
+        case '/read_video':
         final arg = settings.arguments as Map<String, dynamic>;
         return PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation)=> ReadVideo(
-                email: arg['email'],
-                dateDebut: arg['dateDebut'],
-                dateFin: arg['dateFin'],
-                description: arg['description'],
-                nomEvent: arg['nomEvent'],
-                nomUser: arg['nomUser'],
-                videoLink: arg['videoLink'],
-                vueMax: arg['vueMax'],
-                organisateur: arg['organisateur'],
+              nomEvent: arg['nomEvent'],
+              videoLink: arg['videoLink'],
+              oneVideoLink: arg['oneVideoLink'],
             ),
             transitionsBuilder: (context, animation, secondaryAnimation, child) {
               animation = CurvedAnimation(curve: Curves.ease, parent: animation);
@@ -151,19 +155,14 @@ class RouteGenerator {
             }
         );
 
-      case '/read_video':
+      case '/chat_page':
         final arg = settings.arguments as Map<String, dynamic>;
         return PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation)=> ReadVideo(
+            pageBuilder: (context, animation, secondaryAnimation)=> ChatPage(
               email: arg['email'],
-              dateDebut: arg['dateDebut'],
-              dateFin: arg['dateFin'],
-              description: arg['description'],
-              nomEvent: arg['nomEvent'],
+              uidEvent: arg['uidEvent'],
               nomUser: arg['nomUser'],
-              videoLink: arg['videoLink'],
-              vueMax: arg['vueMax'],
-              organisateur: arg['organisateur'],
+              nomEvent: arg['nomEvent'],
             ),
             transitionsBuilder: (context, animation, secondaryAnimation, child) {
               animation = CurvedAnimation(curve: Curves.ease, parent: animation);
@@ -187,6 +186,19 @@ class RouteGenerator {
               );
             }
         );
+
+      case '/reset_password':
+      //  final arg = settings.arguments as Map<String, dynamic>;
+        return PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation)=> ResetPasswordScreen(),
+            transitionsBuilder: (context, animation, secondaryAnimation, child) {
+              animation = CurvedAnimation(curve: Curves.ease, parent: animation);
+              return FadeTransition(
+                opacity:animation,
+                child: child,
+              );
+            }
+        );
       default:
         return MaterialPageRoute(
             builder: (context) => Scaffold(
@@ -199,4 +211,3 @@ class RouteGenerator {
     }
   }
 }
-

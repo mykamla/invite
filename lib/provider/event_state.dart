@@ -8,10 +8,20 @@ class EventState extends DisposableProvider {
   double? _latitude = 0.0;
   double? _longitude = 0.0;
   String? _email = '';
+  String? _nomUser = '';
   String? _urlDownload = '';
+  String? _dist;
+  String? _unit;
 
   String? _addEventLoad = '';
 
+
+  String get nomUser => _nomUser!;
+
+  set nomUser(String value) {
+    _nomUser = value;
+    notifyListeners();
+  }
 
   String get urlDownload => _urlDownload!;
 
@@ -81,8 +91,24 @@ class EventState extends DisposableProvider {
     notifyListeners();
   }
 
+
+  String get dist => _dist!;
+
+  set dist(String value) {
+    _dist = value;
+    notifyListeners();
+  }
+
+  String get unit => _unit!;
+
+  set unit(String value) {
+    _unit = value;
+    notifyListeners();
+  }
+
   @override
   void disposeValues() {
     // TODO: implement disposeValues
   }
+
 }

@@ -5,17 +5,20 @@ import 'package:myliveevent/theme/my_theme.dart';
 
 class Loading extends StatelessWidget {
   Color? iconColor;
+  double? size;
 
-  Loading({this.iconColor = PrimaryColor, Key? key}) : super(key: key);
+  Loading({this.iconColor = PrimaryColor, this.size = 40, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
     //  color: Colors.white70,
       child: Center(
-        child: LoadingAnimationWidget.hexagonDots(
-          color: iconColor!,
-          size: 40,
+        child: LoadingAnimationWidget.discreteCircle(
+          color: YellowColor,
+          secondRingColor: PinkColor,
+          thirdRingColor: PrimaryColor,
+          size: size!,
         ),
       ),
     );

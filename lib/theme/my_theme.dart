@@ -95,7 +95,7 @@ var PrimaryColor700 = PrimarySwatch[700];
 var PrimaryColor800 = PrimarySwatch[800];
 var PrimaryColor900 = PrimarySwatch[900];
 
-MaterialColor YellowSwatch = primarycolor;
+MaterialColor YellowSwatch = yellowcolor;
 var YellowColor50 = YellowSwatch[50];
 var YellowColor100 = YellowSwatch[100];
 var YellowColor200 = YellowSwatch[200];

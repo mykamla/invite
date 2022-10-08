@@ -19,26 +19,13 @@ import 'package:video_player/video_player.dart';
 
 class ReadVideo extends StatefulWidget {
   ReadVideo({Key? key,
-    required this.nomUser,
-    required this.email,
     required this.videoLink,
-    required this.dateDebut,
-    required this.dateFin,
-    required this.vueMax,
-    required this.nomEvent,
-    required this.description,
-    required this.organisateur}) : super(key: key);
+    required this.oneVideoLink,
+    required this.nomEvent,}) : super(key: key);
 
-  String? nomUser;
-  String? email;
-  String? videoLink;
-  DateTime? dateDebut;
-  DateTime? dateFin;
-  int? vueMax;
+  List? videoLink;
+  String? oneVideoLink;
   String? nomEvent;
-  String? description;
-  String? organisateur;
-
 
   @override
   State<StatefulWidget> createState() {
@@ -67,7 +54,8 @@ class _ReadVideoState extends State<ReadVideo> {
     _chewieController?.dispose();
     super.dispose();
   }
-/*
+
+  /*
   List<String> srcs = [
     "https://assets.mixkit.co/videos/preview/mixkit-spinning-around-the-earth-29351-large.mp4",
     "https://assets.mixkit.co/videos/preview/mixkit-daytime-city-traffic-aerial-view-56-large.mp4",
@@ -76,8 +64,8 @@ class _ReadVideoState extends State<ReadVideo> {
   */
 
   Future<void> initializePlayer() async {
-    _videoPlayerController1 = VideoPlayerController.network(widget.videoLink!, videoPlayerOptions: VideoPlayerOptions(allowBackgroundPlayback: true));
-    _videoPlayerController2 = VideoPlayerController.network(widget.videoLink!, videoPlayerOptions: VideoPlayerOptions(allowBackgroundPlayback: true));
+    _videoPlayerController1 = VideoPlayerController.network(widget.oneVideoLink!, videoPlayerOptions: VideoPlayerOptions(allowBackgroundPlayback: true));
+    _videoPlayerController2 = VideoPlayerController.network(widget.oneVideoLink!, videoPlayerOptions: VideoPlayerOptions(allowBackgroundPlayback: true));
     await Future.wait([
       _videoPlayerController1.initialize(),
       _videoPlayerController2.initialize()

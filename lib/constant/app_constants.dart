@@ -71,7 +71,8 @@ class AppConstants {
     eventState.longitude = long??0.0;
 
     eventState.addEventLoad = "Localisation terminée";
-
+print('@@oplm');
+print(eventState.longitude);
   //  return await Geolocator.getCurrentPosition();
     return {'latitude': lat, 'longitude': long };
   }

@@ -71,7 +71,6 @@ dependencies:
   camera: ^0.10.0+1
   #flutter_camera: ^0.1.1
 
-
   firebase_crashlytics:
 
   firebase_auth: ^3.7.0
@@ -88,18 +87,16 @@ dependencies:
   flutter_map: ^2.2.0
   flutter_svg: ^1.1.5
 
-
   #agora_uikit: ^1.0.3
   permission_handler:
 
-  flutter_riverpod:
   lints:
   app_popup_menu: ^1.0.0
   modal_bottom_sheet: ^2.0.0
   circular_menu: ^1.2.3
 
   # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
+  # Use with the CupertinoIcons class for iOS style svg.
   cupertino_icons: ^1.0.2
   haversine_distance: ^1.2.1
   video_thumbnail: ^0.5.3
@@ -108,9 +105,21 @@ dependencies:
   map_launcher: ^2.4.0
   animated_splash_screen: ^1.3.0
   page_transition: ^2.0.9
-  text_divider: ^1.0.0
+  #text_divider: ^1.0.0
   expandable_page_view: ^1.0.17
-  flutter_cache_manager: ^3.3.0
+  #flutter_cache_manager: ^3.3.0
+  timeago: ^3.3.0
+  flutter_geo_hash: ^0.0.4
+  #select_dialog: ^2.0.0
+  cached_network_image: ^3.2.1
+  url_launcher: ^6.1.6
+  text_scroll: ^0.1.0
+  marquee: ^2.2.3
+  emoji_picker_flutter: ^1.4.0
+  animation_wrappers: ^3.0.0
+  flutter_countdown_timer: ^4.1.0
+  sleek_circular_slider: ^2.0.1
+  neon_circular_timer: ^0.0.7
 
 dev_dependencies:
   flutter_test:
@@ -135,19 +144,22 @@ dev_dependencies:
 flutter:
 
   # The following line ensures that the Material Icons font is
-  # included with your application, so that you can use the icons in
+  # included with your application, so that you can use the svg in
   # the material Icons class.
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/
-    - assets/icons/
+    - assets/empty.txt
+    - assets/svg/
     - assets/images/
     - assets/streamer.png
     - assets/messages.json
     - assets/bart.jpg
     - assets/spotify/api_keys.json
+    - assets/lotties/
+    - assets/lotties/music_loader.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
