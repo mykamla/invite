@@ -140,7 +140,13 @@ class _EventsState extends State<Events> with  AutomaticKeepAliveClientMixin<Eve
                         double latitude= event['position']['latitude'];
                         double longitude= event['position']['longitude'];
                         String organisateur = event['organisateur'];
-                        Map<String, dynamic> playlist = event['playlist'] ?? {};
+                        Map<String, dynamic> playlist = {};
+
+                        try{
+                          playlist = event['playlist'];
+                        }catch(e){
+                          playlist = {};
+                        }
                         String uidEvent = event.id;
 
                         final startCoordinate;

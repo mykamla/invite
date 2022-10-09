@@ -52,9 +52,7 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
 
     FirebaseAuth.instance.authStateChanges().listen((user) {
       if (user == null) {
-        print("@@-XX");
       } else {
-        print("@@-YY");
         Navigator.pushReplacementNamed(context, '/my_bottom_menu', arguments:  {
           'user': user,
           'uid': user.uid

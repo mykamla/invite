@@ -64,9 +64,6 @@ class _AddEventState extends State<AddEvent> {
 
   @override
   Widget build(BuildContext context) {
-    print('@@@pfg');
-    print(getPosFinished);
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: PrimaryColor,

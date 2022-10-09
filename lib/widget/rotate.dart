@@ -15,6 +15,12 @@ class _RotateState extends State<Rotate>  with SingleTickerProviderStateMixin{
   late final AnimationController _imageController = AnimationController(vsync: this, duration: Duration(seconds: 2))..repeat();
 
   @override
+  void dispose() {
+    _imageController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: _imageController,

@@ -50,10 +50,6 @@ class _MyBottomMenuState extends State<MyBottomMenu> {
         child: StreamBuilder<User>(
           stream: database.user,
           builder: (context, snapshot) {
-
-            print('@@AZ');
-            print(snapshot.data);
-
             if (snapshot.hasData) {
               User? user = snapshot.data;
               if (user == null) return Scaffold(backgroundColor: PrimaryColor, body: Loading(iconColor: YellowColor,));

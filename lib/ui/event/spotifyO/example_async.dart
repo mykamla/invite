@@ -13,7 +13,7 @@ void main() async {
       types: [SearchType.track],
     ).first(1);
 
-  //  print(search);
+    print(search);
   } on AuthorizationException {
     print('Invalid credentials!');
   }

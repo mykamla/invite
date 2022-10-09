@@ -11,7 +11,7 @@ class AppConstants {
 
   static const String mapBoxStyleId = 'cl82y5vc3007a14qgeavj34nj';
 
-  //static var myLocation = LatLng(51.5090214, -0.1982948);
+  static var myLocation = LatLng(51.5090214, -0.1982948);
 
   /// Determine the current position of the device.
   ///
@@ -71,9 +71,8 @@ class AppConstants {
     eventState.longitude = long??0.0;
 
     eventState.addEventLoad = "Localisation terminée";
-print('@@oplm');
-print(eventState.longitude);
-  //  return await Geolocator.getCurrentPosition();
+
+    //  return await Geolocator.getCurrentPosition();
     return {'latitude': lat, 'longitude': long };
   }
 

@@ -10,6 +10,7 @@ import 'package:myliveevent/ui/event/spotify/example.dart';
 import 'package:myliveevent/ui/profil/connection/services/authentication.dart';
 import 'package:myliveevent/ui/profil/connection/services/database.dart';
 import 'package:myliveevent/model/user.dart';
+import 'package:myliveevent/util/database_task.dart';
 import 'package:myliveevent/widget/loading.dart';
 import 'package:provider/provider.dart';
 
@@ -43,6 +44,12 @@ class _MyBottomMenuState extends State<MyBottomMenu> {
     super.initState();
     _myPage = PageController(initialPage: 1);
     selectedPage = 1;
+
+    ///delete old Videos when app launched
+    DatabaseTask().batchDeleteOldEvent()
+    //    .whenComplete(() => DatabaseTask().batchDeleteChat())
+        ;
+
   }
 
   @override
