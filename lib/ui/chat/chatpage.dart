@@ -29,9 +29,6 @@ class _ChatPageState extends State<ChatPage> {
   //Stream<QuerySnapshot>? _messageStream;
 
   String? uidEvent;
-
-  List<Map<String, dynamic>> messages = [];
-
   @override
   void initState() {
     super.initState();
@@ -61,6 +58,13 @@ class _ChatPageState extends State<ChatPage> {
     super.dispose();
   }
 
+  void _scrollDown() {
+    animatedListController.animateTo(
+        animatedListController.position.minScrollExtent,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.ease);
+  }
+
   @override
   Widget build(BuildContext context) {
     final bottom = MediaQuery.of(context).viewInsets.bottom;
@@ -82,21 +86,9 @@ class _ChatPageState extends State<ChatPage> {
                     child: Loading(),
                   );
                 }
-
                 snapshot.data!.docs.forEach((element) {
                   print("@@gfg");
                   print(element['message']);
-                  messages.add(
-                    {
-                      'email':element['email'],
-                      'message':element['message'],
-                      'nom':element['nom'],
-                      'time':element['time'],
-                      'uid_event':element['uid_event']
-                    }
-                  );
-
-
                 });
 
                 return Padding(
@@ -104,21 +96,23 @@ class _ChatPageState extends State<ChatPage> {
                     child: Stack(
                   alignment: Alignment.bottomCenter,
                   children: [
-                    AnimatedList(
+
+
+                    ListView.builder(
                       padding: EdgeInsets.only(bottom: 55),
                       key: _myListKey,
                       controller: animatedListController,
-                      initialItemCount: messages.length,
+                      itemCount: snapshot.data!.docs.length,
                       physics: ScrollPhysics(),
                       shrinkWrap: true,
                     //  primary: true,
                       reverse: true,
-                      itemBuilder: (BuildContext context, int index, Animation<double> animation) {
-                       // QueryDocumentSnapshot msgs;
-                       // msgs = snapshot.data!.docs[index];
-                        Map<String, dynamic> msgs = messages[index];
+                      itemBuilder: (BuildContext context, int index) {
+                        QueryDocumentSnapshot msgs;
+                        msgs = snapshot.data!.docs[index];
                         print("@@snap");
-                        print(messages.length);
+                        print(snapshot.data!.docs.length);
+                        print(msgs);
 
                         Timestamp t = msgs['time'];
                         DateTime d = t.toDate();
@@ -231,13 +225,8 @@ class _ChatPageState extends State<ChatPage> {
                                     'uid_event': widget.uidEvent,
                                   });
                                   msgController!.clear();
+                                  _scrollDown();
 
-                                  Timer(Duration(milliseconds: 220), (){
-                                    animatedListController.animateTo(
-                                        animatedListController.position.minScrollExtent,
-                                        duration: const Duration(milliseconds: 500),
-                                        curve: Curves.ease);
-                                  });
 
                                 }
                               },
@@ -248,7 +237,10 @@ class _ChatPageState extends State<ChatPage> {
                       ),
                   ],
                 ));
-              },
+
+
+
+                },
             );
           },
 
